@@ -1,0 +1,39 @@
+// using the REST Client VsCode's extension to test our APIs
+// IMPORTANT NOTE: if we set the same variable name in different files, the last one will be used
+@hostname = http://localhost:3000
+
+### Insert a new event
+POST {{hostname}}/map/events HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Concerto di Primavera",
+  "organizer": 2,
+  "description_short": "Concerto live con artisti locali",
+  "description_long": "Un'intera giornata di musica dal vivo, cibo e divertimento per tutte le età.",
+  "location": "Piazza centrale di Trento",
+  "date": "2025-02-20T18:00:00.000Z",
+  "category": "musica"
+}
+
+### Get all events
+GET {{hostname}}/map/events HTTP/1.1 
+
+### Get all events - with filters - only category
+@category = musica
+GET {{hostname}}/map/events?category={{category}} HTTP/1.1
+
+### Get all events - with filters - only date
+@date = 2025-02-20
+GET {{hostname}}/map/events?date={{date}} HTTP/1.1
+
+### Get all events - with filters - both category and date
+GET {{hostname}}/map/events?category={{category}}&date={{date}} HTTP/1.1
+
+### Get a specific event (by ID) - valid ID
+@event_id_valid = 67ffdf5667c844854d252811
+GET {{hostname}}/map/events/{{event_id_valid}} HTTP/1.1 
+
+### Get a specific event (by ID) - invalid ID
+@event_id_invalid = 1234567890
+GET {{hostname}}/map/events/{{event_id_invalid}} HTTP/1.1
