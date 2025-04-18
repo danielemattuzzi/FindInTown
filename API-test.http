@@ -19,6 +19,10 @@ content-type: application/json
 ### Get all events
 GET {{hostname}}/map/events HTTP/1.1 
 
+### Delete a specific event (by ID) - valid ID
+@event_id_valid_eliminate = 67ffe32267c844854d252815
+DELETE {{hostname}}/map/events/{{event_id_valid_eliminate}} HTTP/1.1
+
 ### Get all events - with filters - only category
 @category = musica
 GET {{hostname}}/map/events?category={{category}} HTTP/1.1
@@ -36,4 +40,89 @@ GET {{hostname}}/map/events/{{event_id_valid}} HTTP/1.1
 
 ### Get a specific event (by ID) - invalid ID
 @event_id_invalid = 1234567890
-GET {{hostname}}/map/events/{{event_id_invalid}} HTTP/1.1
+GET {{hostname}}/map/events/{{event_id_invalid}} HTTP/1.1 
+
+
+
+
+
+### Create a new user - 1 user
+POST {{hostname}}/users HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "User 1",
+  "email": "user-1@example.com",
+  "createdAt": "2025-02-20T18:00:00.000Z"
+} 
+
+### Create a new user - 2 user
+POST {{hostname}}/users HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "User 2",
+  "email": "user-2@example.com",
+  "createdAt": "2026-02-20T18:00:00.000Z"
+} 
+
+### Get all users
+GET {{hostname}}/users HTTP/1.1
+
+### Get a specific user (by ID) - valid ID
+@user_id_valid = 68023fc467473b873129ee0a
+GET {{hostname}}/users/{{user_id_valid}} HTTP/1.1
+
+### Get a specific user (by ID) - invalid ID
+@user_id_invalid = 1234567890
+GET {{hostname}}/users/{{user_id_invalid}} HTTP/1.1
+
+### Update a specific user (by ID) - valid ID
+PUT {{hostname}}/users/{{user_id_valid}} HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "modificato",
+  "email": "test@gmail.com" 
+}
+
+### Delete a specific user (by ID) - valid ID
+@user_id_valid_eliminate = 68023f8f67473b873129ee07
+DELETE {{hostname}}/users/{{user_id_valid_eliminate}} HTTP/1.1 
+
+
+
+
+
+### Create a new rating - 1 rating
+POST {{hostname}}/explore/rating HTTP/1.1
+content-Type: application/json
+
+{
+  "event_id": "{{event_id_valid}}",
+  "user_id": "{{user_id_valid}}",
+  "stars": 4,
+  "comment": "Bell'evento, ma un po' troppo affollato."
+} 
+
+### Create a new rating - 2 rating
+POST {{hostname}}/explore/rating HTTP/1.1
+content-Type: application/json
+
+{
+  "event_id": "{{event_id_valid}}",
+  "user_id": "{{user_id_valid}}",
+  "stars": 5,
+  "comment": "Fantastico! Non vedo l'ora di tornarci."
+} 
+
+### Get all ratings of a specific event (by ID) - valid ID
+GET {{hostname}}/explore/rating/{{event_id_valid}} HTTP/1.1
+
+### Delete a specific rating (by ID) - valid ID
+@rating_id_valid = 680241d367473b873129ee12
+DELETE {{hostname}}/explore/rating/{{rating_id_valid}} HTTP/1.1
+
+### Delete a specific rating (by ID) - invalid ID
+@rating_id_invalid = 1234567890
+DELETE {{hostname}}/explore/rating/{{rating_id_invalid}} HTTP/1.1
