@@ -1,0 +1,128 @@
+// using the REST Client VsCode's extension to test our APIs
+// IMPORTANT NOTE: if we set the same variable name in different files, the last one will be used
+@hostname = http://localhost:3000
+
+### Insert a new event
+POST {{hostname}}/map/events HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Concerto di Primavera",
+  "organizer": 10,
+  "description_short": "Concerto live con artisti locali",
+  "description_long": "Un'intera giornata di musica dal vivo, cibo e divertimento per tutte le età.",
+  "location": "Piazza centrale di Trento",
+  "date": "2025-02-20T18:00:00.000Z",
+  "category": "musica"
+}
+
+### Get all events
+GET {{hostname}}/map/events HTTP/1.1 
+
+### Delete a specific event (by ID) - valid ID
+@event_id_valid_eliminate = 67ffe32267c844854d252815
+DELETE {{hostname}}/map/events/{{event_id_valid_eliminate}} HTTP/1.1
+
+### Get all events - with filters - only category
+@category = musica
+GET {{hostname}}/map/events?category={{category}} HTTP/1.1
+
+### Get all events - with filters - only date
+@date = 2025-02-20
+GET {{hostname}}/map/events?date={{date}} HTTP/1.1
+
+### Get all events - with filters - both category and date
+GET {{hostname}}/map/events?category={{category}}&date={{date}} HTTP/1.1
+
+### Get a specific event (by ID) - valid ID
+@event_id_valid = 67ffdf5667c844854d252811
+GET {{hostname}}/map/events/{{event_id_valid}} HTTP/1.1 
+
+### Get a specific event (by ID) - invalid ID
+@event_id_invalid = 1234567890
+GET {{hostname}}/map/events/{{event_id_invalid}} HTTP/1.1 
+
+
+
+
+
+### Create a new user - 1 user
+POST {{hostname}}/user/profile HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "User 1",
+  "email": "user-1@example.com",
+  "createdAt": "2025-02-20T18:00:00.000Z"
+} 
+
+### Create a new user - 2 user
+POST {{hostname}}/user/profile HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "User 2",
+  "email": "user-2@example.com",
+  "createdAt": "2026-02-20T18:00:00.000Z"
+} 
+
+### Get all users
+GET {{hostname}}/user/profile HTTP/1.1
+
+### Get a specific user (by ID) - valid ID
+@user_id_valid = 68023fc467473b873129ee0a
+GET {{hostname}}/user/profile/{{user_id_valid}} HTTP/1.1
+
+### Get a specific user (by ID) - invalid ID
+@user_id_invalid = 1234567890
+GET {{hostname}}/user/profile/{{user_id_invalid}} HTTP/1.1
+
+### Update a specific user (by ID) - valid ID
+PUT {{hostname}}/user/profile/{{user_id_valid}} HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "modificato",
+  "email": "test@gmail.com" 
+}
+
+### Delete a specific user (by ID) - valid ID
+@user_id_valid_eliminate = 680257022acb940a96baed14
+DELETE {{hostname}}/user/profile/{{user_id_valid_eliminate}} HTTP/1.1 
+
+
+
+
+
+### Create a new rating - 1 rating
+POST {{hostname}}/explore/rating HTTP/1.1
+content-Type: application/json
+
+{
+  "event_id": "{{event_id_valid}}",
+  "user_id": "{{user_id_valid}}",
+  "stars": 4,
+  "comment": "Bell'evento, ma un po' troppo affollato."
+} 
+
+### Create a new rating - 2 rating
+POST {{hostname}}/explore/rating HTTP/1.1
+content-Type: application/json
+
+{
+  "event_id": "{{event_id_valid}}",
+  "user_id": "{{user_id_valid}}",
+  "stars": 5,
+  "comment": "Fantastico! Non vedo l'ora di tornarci."
+} 
+
+### Get all ratings of a specific event (by ID) - valid ID
+GET {{hostname}}/explore/rating/{{event_id_valid}} HTTP/1.1
+
+### Delete a specific rating (by ID) - valid ID
+@rating_id_valid = 680241d667473b873129ee14
+DELETE {{hostname}}/explore/rating/{{rating_id_valid}} HTTP/1.1
+
+### Delete a specific rating (by ID) - invalid ID
+@rating_id_invalid = 1234567890
+DELETE {{hostname}}/explore/rating/{{rating_id_invalid}} HTTP/1.1
