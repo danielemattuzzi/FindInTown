@@ -8,7 +8,7 @@ content-type: application/json
 
 {
   "title": "Concerto di Primavera",
-  "organizer": 2,
+  "organizer": 10,
   "description_short": "Concerto live con artisti locali",
   "description_long": "Un'intera giornata di musica dal vivo, cibo e divertimento per tutte le età.",
   "location": "Piazza centrale di Trento",
@@ -47,7 +47,7 @@ GET {{hostname}}/map/events/{{event_id_invalid}} HTTP/1.1
 
 
 ### Create a new user - 1 user
-POST {{hostname}}/users HTTP/1.1
+POST {{hostname}}/user/profile HTTP/1.1
 content-Type: application/json
 
 {
@@ -57,7 +57,7 @@ content-Type: application/json
 } 
 
 ### Create a new user - 2 user
-POST {{hostname}}/users HTTP/1.1
+POST {{hostname}}/user/profile HTTP/1.1
 content-Type: application/json
 
 {
@@ -67,18 +67,18 @@ content-Type: application/json
 } 
 
 ### Get all users
-GET {{hostname}}/users HTTP/1.1
+GET {{hostname}}/user/profile HTTP/1.1
 
 ### Get a specific user (by ID) - valid ID
 @user_id_valid = 68023fc467473b873129ee0a
-GET {{hostname}}/users/{{user_id_valid}} HTTP/1.1
+GET {{hostname}}/user/profile/{{user_id_valid}} HTTP/1.1
 
 ### Get a specific user (by ID) - invalid ID
 @user_id_invalid = 1234567890
-GET {{hostname}}/users/{{user_id_invalid}} HTTP/1.1
+GET {{hostname}}/user/profile/{{user_id_invalid}} HTTP/1.1
 
 ### Update a specific user (by ID) - valid ID
-PUT {{hostname}}/users/{{user_id_valid}} HTTP/1.1
+PUT {{hostname}}/user/profile/{{user_id_valid}} HTTP/1.1
 content-Type: application/json
 
 {
@@ -87,8 +87,8 @@ content-Type: application/json
 }
 
 ### Delete a specific user (by ID) - valid ID
-@user_id_valid_eliminate = 68023f8f67473b873129ee07
-DELETE {{hostname}}/users/{{user_id_valid_eliminate}} HTTP/1.1 
+@user_id_valid_eliminate = 680257022acb940a96baed14
+DELETE {{hostname}}/user/profile/{{user_id_valid_eliminate}} HTTP/1.1 
 
 
 
@@ -120,7 +120,7 @@ content-Type: application/json
 GET {{hostname}}/explore/rating/{{event_id_valid}} HTTP/1.1
 
 ### Delete a specific rating (by ID) - valid ID
-@rating_id_valid = 680241d367473b873129ee12
+@rating_id_valid = 680241d667473b873129ee14
 DELETE {{hostname}}/explore/rating/{{rating_id_valid}} HTTP/1.1
 
 ### Delete a specific rating (by ID) - invalid ID
