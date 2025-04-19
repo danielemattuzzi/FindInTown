@@ -1,5 +1,45 @@
 const User = require('../models/User');
 
+// API: GET /user/me to get current user profile
+exports.getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: 'Utente non trovato' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Errore del server' });
+  }
+}; 
+
+// API: PUT /users/me to update current user profile
+exports.updateCurrentUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { name, email, password },
+      { new: true }
+    );
+
+    if (!updatedUser) return res.status(404).json({ error: 'Utente non trovato' });
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ error: 'Errore del server' });
+  }
+};
+
+
+// API: DELETE /users/me delete current user profile
+exports.deleteCurrentUser = async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.user.id);
+    if (!deletedUser) return res.status(404).json({ error: 'Utente non trovato' });
+    res.json({ message: 'Utente eliminato con successo' });
+  } catch (err) {
+    res.status(500).json({ error: 'Errore del server' });
+  }
+};
+
 // API: GET /user/profile to get all user profiles
 exports.getAllUsers = async (req, res) => {
   try {
@@ -13,9 +53,12 @@ exports.getAllUsers = async (req, res) => {
 // API: GET /user/profile/:id to get user profile
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
-    if (!user) return res.status(404).json({ error: 'Utente non trovato' });
-    res.json(user);
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: 'Utente non trovato' }); 
+
+    // Remove password from the response
+    const { password: _, ...userWithoutPassword } = user.toObject();
+    res.json(userWithoutPassword);
   } catch (err) {
     res.status(500).json({ error: 'Errore del server' });
   }
@@ -24,12 +67,15 @@ exports.getUserById = async (req, res) => {
 // API: POST /user/profile to create a new user profile
 exports.createUser = async (req, res) => {
   try {
-    const { name, email, createdAt } = req.body;
-    const newUser = new User({ name, email, createdAt });
+    const { name, email, password, createdAt} = req.body;
+    const newUser = new User({ name, email, password, createdAt });
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+
+    // Remove password from the response
+    const { password: _, ...userWithoutPassword } = savedUser.toObject();
+    res.status(201).json(userWithoutPassword);
   } catch (err) {
-    if (err.code === 11000) {
+    if (err.code === 11000) { // duplicate key error
       return res.status(400).json({ error: 'Email già registrata' });
     }
     res.status(500).json({ error: 'Errore del server' });
@@ -40,11 +86,11 @@ exports.createUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { name, email },
+      { name, email , password},
       { new: true }
     );
 

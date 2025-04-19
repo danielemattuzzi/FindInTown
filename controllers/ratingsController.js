@@ -35,7 +35,7 @@ exports.createNewRating = async (req, res) => {
     // create a new rating
     const newRating = new Rating({
       event_id,
-      user_id,
+      user_id: req.user.id, // Use the logged-in user's ID
       stars,
       comment
     });
@@ -49,7 +49,23 @@ exports.createNewRating = async (req, res) => {
   }
 }; 
 
-// API: DELETE /explore/rating/:ratingId to delete a rating
+// API: DELETE /explore/rating/:ratingId to delete a rating only if the user is the owner of the rating
+exports.deleteRating = async (req, res) => {
+  const rating = await Rating.findById(req.params.id);
+  if (!rating) return res.status(404).json({ error: 'Valutazione non trovata' });
+
+  if (rating.user_id.toString() !== req.user.id) { // Check if the logged-in user is the owner of the rating
+    return res.status(403).json({ error: 'Non autorizzato' });
+  }
+
+  await rating.deleteOne();
+  res.json({ message: 'Valutazione eliminata' });
+};
+
+
+
+/*
+// API: DELETE /explore/rating/:ratingId to delete a rating (NO VERIFICATION)
 exports.deleteRating = async (req, res) => {
   try {
     const { ratingId } = req.params;
@@ -72,3 +88,4 @@ exports.deleteRating = async (req, res) => {
     res.status(500).json({ error: 'Errore del server' });
   }
 };
+*/ 

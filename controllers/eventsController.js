@@ -27,7 +27,20 @@ exports.getAllEvents = async (req, res) => {
   }
 };
 
-// API: POST /map/events to create a new event
+// API: POST /map/events to create a new event adding the organizer objectId
+exports.createEvent = async (req, res) => {
+  try {
+    const newEvent = new Event({ ...req.body, organizer: req.user.id }); // create a new event with the request body and the organizer set to the logged-in user
+    const savedEvent = await newEvent.save();
+    res.status(201).json(savedEvent);
+  } catch (err) {
+    res.status(500).json({ error: 'Errore creazione evento' });
+  }
+};
+
+
+/* 
+// API: POST /map/events to create a new event (NO VERIFICATION)
 exports.createEvent = async (req, res) => {
   try {
     const {
@@ -59,9 +72,25 @@ exports.createEvent = async (req, res) => {
     res.status(500).json({ error: 'Errore durante la creazione dell\'event' });
   }
 };
+*/ 
+
+
+// API: PUT /map/events/:id to update an event only if the user is the organizer
+exports.updateEvent = async (req, res) => {
+  const event = await Event.findById(req.params.id);
+  if (!event) return res.status(404).json({ error: 'Evento non trovato' });
+
+  if (event.organizer !== req.user.id) { // Check if the logged-in user is the organizer of the event
+    return res.status(403).json({ error: 'Non sei il proprietario dell’evento' });
+  }
+
+  const updated = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(updated);
+};
+
 
 // API: GET /map/events/:id to get event details
-module.exports.getEventDetails = async (req, res) => {
+exports.getEventDetails = async (req, res) => {
   try {
     const { eventId } = req.params;
 
@@ -85,8 +114,22 @@ module.exports.getEventDetails = async (req, res) => {
   }
 };
 
-// API: DELETE /map/events/:id to delete an event
-module.exports.deleteEvent = async (req, res) => {
+// API: DELETE /map/events/:id to delete an event only if the user is the organizer
+exports.deleteEvent = async (req, res) => {
+  const event = await Event.findById(req.params.id);
+  if (!event) return res.status(404).json({ error: 'Evento non trovato' });
+
+  if (event.organizer !== req.user.id) { // Check if the logged-in user is the organizer of the event
+    return res.status(403).json({ error: 'Non autorizzato' });
+  }
+
+  await event.deleteOne();
+  res.json({ message: 'Evento eliminato' });
+};
+
+/* 
+// API: DELETE /map/events/:id to delete an event (NO VERIFICATION)
+exports.deleteEvent = async (req, res) => {
   try {
     const { eventId } = req.params;
 
@@ -102,3 +145,4 @@ module.exports.deleteEvent = async (req, res) => {
     res.status(500).json({ error: 'Errore durante l\'eliminazione dell\'event' });
   }
 };
+*/ 
