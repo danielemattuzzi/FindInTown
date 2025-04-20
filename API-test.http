@@ -27,7 +27,7 @@ content-Type: application/json
 }
 
 ### Get info about the logged-in user
-@token_valid = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDNjOTMxYjY1ZThjY2JmMzk2ZDBmMiIsImlhdCI6MTc0NTA3ODU3OCwiZXhwIjoxNzQ1MTY0OTc4fQ.Ff-xH-uR0VIyuQvaF8rfHLrlh_6LdZx4KvQldAHPOmc
+@token_valid = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDUyNjc5NTM0OGFiY2FiOTNmMzJhNSIsImlhdCI6MTc0NTE2Nzk5MywiZXhwIjoxNzQ1MjU0MzkzfQ.udRIoqAX7SVO-xRCo518HrNF7MFYQ6gpWFmOFmNJseU
 GET {{hostname}}/user/me HTTP/1.1
 Authorization: Bearer {{token_valid}}
 
@@ -45,12 +45,7 @@ content-Type: application/json
 ### Delete the logged-in user profile
 DELETE {{hostname}}/user/me HTTP/1.1
 Authorization: Bearer {{token_valid}}
-content-Type: application/json
 
-{
-  "email": "{{email_user}}",
-  "password": "{{password_user}}"
-}
 
 
 ### Get all users 
@@ -60,12 +55,10 @@ GET {{hostname}}/user/profile HTTP/1.1
 ### Get a specific user (by ID) - valid ID
 @user_id_valid = 6803c931b65e8ccbf396d0f2
 GET {{hostname}}/user/profile/{{user_id_valid}} HTTP/1.1
-Authorization: Bearer {{token_valid}}
 
 ### Get a specific user (by ID) - invalid ID
 @user_id_invalid = 1234567890
 GET {{hostname}}/user/profile/{{user_id_invalid}} HTTP/1.1 
-Authorization: Bearer {{token_valid}}
 
 ### Update a specific user (by ID) - valid ID 
 # PUT {{hostname}}/user/profile/{{user_id_valid}} HTTP/1.1

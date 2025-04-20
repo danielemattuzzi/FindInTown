@@ -18,7 +18,7 @@ router.put('/me', verifyToken, usersController.updateCurrentUser);
 router.delete('/me', verifyToken, usersController.deleteCurrentUser);
 
 // API: GET /user/profile/:id to get user profile
-router.get('/profile/:userId', verifyToken, usersController.getUserById);
+router.get('/profile/:userId', usersController.getUserById);
 // API: PUT /user/profile/:id to update user profile
 // router.put('/profile/:id', verifyToken, usersController.updateUser);
 // API: DELETE /user/profile/:id to delete user profile

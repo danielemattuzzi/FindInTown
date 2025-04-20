@@ -4,7 +4,9 @@ const bcrypt = require('bcryptjs');
 const UserProfileSchema = new mongoose.Schema({
   name: String,
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  // TODO: we need to have a password or a googleId
+  password: String, // classic authenticaion 
+  googleId: String, // google authentication
   createdAt: { type: Date, default: Date.now }
 });
 
