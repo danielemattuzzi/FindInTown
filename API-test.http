@@ -2,45 +2,6 @@
 // IMPORTANT NOTE: if we set the same variable name in different files, the last one will be used
 @hostname = http://localhost:3000
 
-### Insert a new event
-POST {{hostname}}/map/events HTTP/1.1
-content-type: application/json
-
-{
-  "title": "Concerto di Primavera",
-  "organizer": 10,
-  "description_short": "Concerto live con artisti locali",
-  "description_long": "Un'intera giornata di musica dal vivo, cibo e divertimento per tutte le età.",
-  "location": "Piazza centrale di Trento",
-  "date": "2025-02-20T18:00:00.000Z",
-  "category": "musica"
-}
-
-### Get all events
-GET {{hostname}}/map/events HTTP/1.1 
-
-### Delete a specific event (by ID) - valid ID
-@event_id_valid_eliminate = 67ffe32267c844854d252815
-DELETE {{hostname}}/map/events/{{event_id_valid_eliminate}} HTTP/1.1
-
-### Get all events - with filters - only category
-@category = musica
-GET {{hostname}}/map/events?category={{category}} HTTP/1.1
-
-### Get all events - with filters - only date
-@date = 2025-02-20
-GET {{hostname}}/map/events?date={{date}} HTTP/1.1
-
-### Get all events - with filters - both category and date
-GET {{hostname}}/map/events?category={{category}}&date={{date}} HTTP/1.1
-
-### Get a specific event (by ID) - valid ID
-@event_id_valid = 67ffdf5667c844854d252811
-GET {{hostname}}/map/events/{{event_id_valid}} HTTP/1.1 
-
-### Get a specific event (by ID) - invalid ID
-@event_id_invalid = 1234567890
-GET {{hostname}}/map/events/{{event_id_invalid}} HTTP/1.1 
 
 
 ### Register a user - valid email
@@ -121,10 +82,70 @@ Authorization: Bearer {{token_valid}}
 
 
 
+### Insert a new event
+@category = musica 
+@date = 2025-02-20T18:00:00.000Z
+POST {{hostname}}/map/events HTTP/1.1
+Authorization: Bearer {{token_valid}}
+content-type: application/json
+
+{
+  "title": "Concerto di Primavera",
+  "organizer": "{{user_id_valid}}",
+  "description_short": "Concerto live con artisti locali",
+  "description_long": "Un'intera giornata di musica dal vivo, cibo e divertimento per tutte le età.",
+  "location": "Piazza centrale di Trento",
+  "date": "{{date}}",
+  "category": "{{category}}"
+}
+
+### Get a specific event (by ID) - valid ID
+@event_id_valid = 68050da938db8d0dd2c1ef40
+GET {{hostname}}/map/events/{{event_id_valid}} HTTP/1.1 
+
+### Get a specific event (by ID) - invalid ID
+@event_id_invalid = 1234567890
+GET {{hostname}}/map/events/{{event_id_invalid}} HTTP/1.1 
+
+### Update an existing event - valid ID 
+PUT {{hostname}}/map/events/{{event_id_valid}} HTTP/1.1
+Authorization: Bearer {{token_valid}}
+content-Type: application/json
+
+{
+  "title": "Concerto di Autunno",
+  "organizer": "{{user_id_valid}}",
+  "description_short": "Concerto live con artisti locali",
+  "description_long": "Un'intera giornata di musica dal vivo, cibo e divertimento per tutte le età.",
+  "location": "Piazza centrale di Trento",
+  "date": "2025-02-20T18:00:00.000Z",
+  "category": "musica"
+}
+
+
+### Get all events
+GET {{hostname}}/map/events HTTP/1.1 
+
+### Get all events - with filters - only category
+GET {{hostname}}/map/events?category={{category}} HTTP/1.1
+
+### Get all events - with filters - only date
+GET {{hostname}}/map/events?date={{date}} HTTP/1.1
+
+### Get all events - with filters - both category and date
+GET {{hostname}}/map/events?category={{category}}&date={{date}} HTTP/1.1
+
+### Delete a specific event (by ID) - valid ID
+DELETE {{hostname}}/map/events/{{event_id_valid}} HTTP/1.1 
+Authorization: Bearer {{token_valid}}
+
+
+
 
 
 ### Create a new rating - 1 rating
 POST {{hostname}}/explore/rating HTTP/1.1
+Authorization: Bearer {{token_valid}}
 content-Type: application/json
 
 {
@@ -136,6 +157,7 @@ content-Type: application/json
 
 ### Create a new rating - 2 rating
 POST {{hostname}}/explore/rating HTTP/1.1
+Authorization: Bearer {{token_valid}}
 content-Type: application/json
 
 {
@@ -149,8 +171,9 @@ content-Type: application/json
 GET {{hostname}}/explore/rating/{{event_id_valid}} HTTP/1.1
 
 ### Delete a specific rating (by ID) - valid ID
-@rating_id_valid = 680241d667473b873129ee14
+@rating_id_valid = 68050eb8b41a48e27e7f31e1
 DELETE {{hostname}}/explore/rating/{{rating_id_valid}} HTTP/1.1
+Authorization: Bearer {{token_valid}}
 
 ### Delete a specific rating (by ID) - invalid ID
 @rating_id_invalid = 1234567890

@@ -4,7 +4,7 @@ const ratingsController = require('../controllers/ratingsController');
 const { verifyToken } = require('../middleware/auth');
 
 // API: GET /explore/rating/:eventId to get all ratings for an event
-router.get('/rating/:eventId', ratingsController.createRating);
+router.get('/rating/:eventId', ratingsController.getEventRating);
 
 // API: POST /explore/rating to create a new rating
 router.post('/rating', verifyToken, ratingsController.createNewRating);

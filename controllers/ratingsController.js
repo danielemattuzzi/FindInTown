@@ -1,7 +1,7 @@
 const Rating = require('../models/Rating');
 
-// API: GET /explore/rating:eventId to create a new rating
-exports.createRating = async (req, res) => {
+// API: GET /explore/rating:eventId to get all ratings for an event
+exports.getEventRating = async (req, res) => {
   try {
     const { eventId } = req.params;
 
@@ -12,8 +12,8 @@ exports.createRating = async (req, res) => {
 
     // get all ratings for the event
     const ratings = await Rating.find({ event_id: eventId })
-      .populate('user_id', 'name') // Popola solo il nome dell'utente
-      .populate('event_id', 'title'); // Popola solo il titolo dell'evento
+      .populate('user_id', 'name email') // Popola solo il nome dell'utente
+      // .populate('event_id', 'title'); // Popola solo il titolo dell'evento
 
     res.status(200).json(ratings);
   } catch (error) {
@@ -51,7 +51,7 @@ exports.createNewRating = async (req, res) => {
 
 // API: DELETE /explore/rating/:ratingId to delete a rating only if the user is the owner of the rating
 exports.deleteRating = async (req, res) => {
-  const rating = await Rating.findById(req.params.id);
+  const rating = await Rating.findById(req.params.ratingId);
   if (!rating) return res.status(404).json({ error: 'Valutazione non trovata' });
 
   if (rating.user_id.toString() !== req.user.id) { // Check if the logged-in user is the owner of the rating

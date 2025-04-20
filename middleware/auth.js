@@ -3,6 +3,11 @@ const { JWT_SECRET } = process.env; // JWT secret from environment variables
 
 // Middleware to verify JWT token
 exports.verifyToken = (req, res, next) => {
+    // Check if the token is present in the Authorization header
+    if (req.header('Authorization') === undefined) {
+        return res.status(401).json({ error: 'Token mancante' });
+    }
+
     const token = req.header('Authorization')?.replace('Bearer ', '') || req.query.token || req.body.token; // Get the token from the Authorization header, query string, or request body
 
     if (!token) return res.status(401).json({ error: 'Token mancante' });
