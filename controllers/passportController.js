@@ -14,13 +14,15 @@ exports.googleCallback = [
       return res.status(401).json({ error: 'Autenticazione fallita, utente non trovato' });
     }
 
-    const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: req.user._id, role: req.user.role }, process.env.JWT_SECRET, {
       expiresIn: '1d'
     });
 
-    res.json({ token }); 
+    // You can return the token in the response
+    // res.json({ token }); 
     // We can also return as URL 
-    // res.redirect(`http://localhost:3000?token=${token}`);
+    // TODO: change this to the frontend URL
+    res.redirect(`http://localhost:3000?token=${token}`);
   }
 ];
 

@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
 const { verifyToken } = require('../middleware/auth'); // Import JWT verification middleware
+const { verifyAdmin } = require('../middleware/admin'); // Import JWT verification middleware
 
 // replaced these methods with the ones from usersController
 // API: GET /user/profile to get all user profiles
 // API: POST /user/profile to create a new user profile
 // router.post('/profile', usersController.createUser);
-// TODO: delete this route when the project is finished
-router.get('/profile', usersController.getAllUsers);
+
+// API: GET /user/profile to get all user profiles (admin only)
+router.get('/profile', verifyToken, verifyAdmin, usersController.getAllUsers);
 
 // API: GET /user/me to get current user profile
 router.get('/me', verifyToken, usersController.getCurrentUser);

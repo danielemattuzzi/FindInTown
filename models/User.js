@@ -6,7 +6,12 @@ const UserProfileSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   // TODO: we need to have a password or a googleId
   password: String, // classic authenticaion 
-  googleId: String, // google authentication
+  googleId: String, // google authentication 
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
   createdAt: { type: Date, default: Date.now }
 });
 
