@@ -6,7 +6,6 @@ const eventRoutes = require('./routes/events');
 const userRoutes = require('./routes/users');
 const ratingRoutes = require('./routes/ratings');
 const authRoutes = require('./routes/auth'); // Import auth routes
-const { verifyToken } = require('./middleware/auth'); // Import JWT verification middleware
 
 // Middleware
 app.use(express.json());

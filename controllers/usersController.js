@@ -64,6 +64,8 @@ exports.getUserById = async (req, res) => {
   }
 }; 
 
+/* 
+// ----------------- TEST INIZIALE DEL FUNZIONAMENTO -----------------
 // API: POST /user/profile to create a new user profile
 exports.createUser = async (req, res) => {
   try {
@@ -111,4 +113,5 @@ exports.deleteUser = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Errore del server' });
   }
-};
+}; 
+*/ 

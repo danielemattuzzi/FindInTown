@@ -61,31 +61,3 @@ exports.deleteRating = async (req, res) => {
   await rating.deleteOne();
   res.json({ message: 'Valutazione eliminata' });
 };
-
-
-
-/*
-// API: DELETE /explore/rating/:ratingId to delete a rating (NO VERIFICATION)
-exports.deleteRating = async (req, res) => {
-  try {
-    const { ratingId } = req.params;
-
-    // check if ratingId is provided
-    if (!ratingId) {
-      return res.status(400).json({ error: 'ratingId è obbligatorio nel percorso' });
-    }
-
-    // delete the rating
-    const deletedRating = await Rating.findByIdAndDelete(ratingId);
-
-    if (!deletedRating) {
-      return res.status(404).json({ error: 'Valutazione non trovata' });
-    }
-
-    res.status(200).json({ message: 'Valutazione eliminata con successo' });
-  } catch (err) {
-    console.error('Errore durante l\'eliminazione della valutazione:', err);
-    res.status(500).json({ error: 'Errore del server' });
-  }
-};
-*/ 

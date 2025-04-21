@@ -7,12 +7,12 @@ const { JWT_SECRET } = process.env; // JWT secret from environment variables
 // API: POST /auth/register to register a new user
 exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role} = req.body;
 
     const userExists = await User.findOne({ email }); // email is unique in the User model
     if (userExists) return res.status(400).json({ error: 'Email già in uso' });
 
-    const newUser = new User({ name, email, password });
+    const newUser = new User({ name, email, password, role });
     await newUser.save();
 
     res.status(201).json({ message: 'Utente registrato con successo' });
@@ -33,14 +33,15 @@ exports.login = async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ error: 'Credenziali non valide' });
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
 
     res.json({
       token,
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (err) {

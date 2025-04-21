@@ -3,6 +3,37 @@
 @hostname = http://localhost:3000
 
 
+### Register admin
+@name_admin = admin
+@email_admin = admin@admin.com
+@password_admin = admin123
+POST {{hostname}}/auth/register HTTP/1.1
+content-Type: application/json
+
+{
+  "name": "{{name_admin}}",
+  "email": "{{email_admin}}",
+  "password": "{{password_admin}}",
+  "role": "admin"
+}
+
+### Login admin 
+@token_admin = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDY0MDYwN2FjZTZmOGJjOTgzYjEyZCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NTI0MDE3MCwiZXhwIjoxNzQ1MzI2NTcwfQ.k52ikqJQzK7JGaY1Xmxv7H5x8joFldHljwbsf29zmfs
+POST {{hostname}}/auth/login HTTP/1.1
+content-Type: application/json
+
+{
+  "email": "{{email_admin}}",
+  "password": "{{password_admin}}"
+}
+
+### Get info about the logged-in admin
+GET {{hostname}}/user/me HTTP/1.1
+Authorization: Bearer {{token_admin}}
+
+### Get all users (admin only)
+GET {{hostname}}/user/profile HTTP/1.1
+Authorization: Bearer {{token_admin}}
 
 ### Register a user - valid email
 @name_user = Mario Rossi
@@ -17,6 +48,7 @@ content-Type: application/json
   "password": "{{password_user}}"
 }
 
+
 ### Login a user - valid email
 POST {{hostname}}/auth/login HTTP/1.1
 content-Type: application/json
@@ -27,7 +59,7 @@ content-Type: application/json
 }
 
 ### Get info about the logged-in user
-@token_valid = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDUyNjc5NTM0OGFiY2FiOTNmMzJhNSIsImlhdCI6MTc0NTE2Nzk5MywiZXhwIjoxNzQ1MjU0MzkzfQ.udRIoqAX7SVO-xRCo518HrNF7MFYQ6gpWFmOFmNJseU
+@token_valid = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDYzYzQ5ODdkZGI3MjgzZGZkOGYyNCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ1MjM5MTE2LCJleHAiOjE3NDUzMjU1MTZ9.H9lxTCaHiA3TcJRjVrc-nqUrsr9XY7eunUXMptM0zcU
 GET {{hostname}}/user/me HTTP/1.1
 Authorization: Bearer {{token_valid}}
 
@@ -47,10 +79,6 @@ DELETE {{hostname}}/user/me HTTP/1.1
 Authorization: Bearer {{token_valid}}
 
 
-
-### Get all users 
-// TODO: delete this test after finish the project
-GET {{hostname}}/user/profile HTTP/1.1
 
 ### Get a specific user (by ID) - valid ID
 @user_id_valid = 6803c931b65e8ccbf396d0f2
