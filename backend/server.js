@@ -5,7 +5,18 @@ const app = express();
 const eventRoutes = require('./routes/events'); 
 const userRoutes = require('./routes/users');
 const ratingRoutes = require('./routes/ratings');
-const authRoutes = require('./routes/auth'); // Import auth routes
+const authRoutes = require('./routes/auth'); 
+const cors = require('cors'); // Import CORS middleware
+
+// Enable CORS for all routes
+//app.use(cors());
+
+// Add CORS middleware to allow requests from specific origins
+app.use(cors({
+  origin: 'http://localhost:5173', // frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+}));
 
 // Middleware
 app.use(express.json());
@@ -23,12 +34,9 @@ app.use('/explore', ratingRoutes);
 app.use('/user', userRoutes); 
 app.use('/auth', authRoutes); 
 
-// Authentication routes
-// app.use('/auth', authRoutes); // Use auth routes
-
 // Start the server 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
-}); 
+});
 
