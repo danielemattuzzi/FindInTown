@@ -1,5 +1,21 @@
 <script setup>
-// No need for HelloWorld import
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router'; 
+
+const router = useRouter();
+
+// Manage the token from the URL (if present) 
+// *This is useful for Google login, where the token is passed as a query parameter*
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token'); // Get the token from the URL
+
+  if (token) { // saving the token in localStorage
+    localStorage.setItem('token', token);
+    router.push('/'); 
+    alert('Login effettuato con successo!'); 
+  }
+});
 </script>
 
 <template>

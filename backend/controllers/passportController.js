@@ -20,9 +20,8 @@ exports.googleCallback = [
 
     // You can return the token in the response
     // res.json({ token }); 
-    // We can also return as URL 
-    // TODO: change this to the frontend URL
-    res.redirect(`http://localhost:3000?token=${token}`);
+    // We can also return as URL (better for frontend)
+    res.redirect(`http://localhost:5173?token=${token}`);
   }
 ];
 

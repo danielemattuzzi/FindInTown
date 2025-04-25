@@ -1,19 +1,19 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
+  <div class="page-container min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-sm hover:shadow-2xl transition duration-150 border border-gray-200">
       <h2 class="text-2xl font-bold mb-6 text-center">Registrazione</h2>
       <form @submit.prevent="handleRegister" class="space-y-4">
         <input v-model="form.name" placeholder="Nome"
-               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
         <input v-model="form.email" type="email" placeholder="Email"
-               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
         <input v-model="form.password" type="password" placeholder="Password"
-               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
         <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">Registrati</button>
+                class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition">Registrati</button>
       </form>
       <p class="mt-4 text-sm text-center">Hai già un account? 
-        <router-link to="/login" class="text-blue-600 hover:underline">Accedi</router-link>
+        <router-link to="/login" class="text-green-600 hover:underline">Accedi</router-link>
       </p>
     </div>
   </div>

@@ -3,7 +3,7 @@ const Event = require('../models/Event');
 // API: GET /map/events with filter for category and date 
 exports.getAllEvents = async (req, res) => {
   try {
-    const { category, date } = req.query; // Extract query parameters 
+    const { category, date, title } = req.query; // Extract query parameters 
     // example: /map/events?category=music&date=2023-10-01
     const filter = {}; // used to build the filter object
     // example: { category: 'music', date: { $gte: new Date('2023-10-01'), $lt: new Date('2023-10-02') } }
@@ -17,6 +17,10 @@ exports.getAllEvents = async (req, res) => {
       const end = new Date(date);
       end.setDate(end.getDate() + 1); // set end date to the next day
       filter.date = { $gte: start, $lt: end }; // filter by date range (mongodb query)
+    } 
+
+    if (title) { 
+      filter.title = { $regex: title, $options: 'i' }; // case-insensitive search
     }
 
     const events = await Event.find(filter) // Find events matching the filter
@@ -37,7 +41,8 @@ exports.createEvent = async (req, res) => {
     const savedEvent = await newEvent.save();
     savedEvent.populate('organizer', 'name email'); // populate the organizer field with the user's name and email
     res.status(201).json(savedEvent);
-  } catch (err) {
+  } catch (err) { 
+    console.error(err);
     res.status(500).json({ error: 'Errore creazione evento' });
   }
 };

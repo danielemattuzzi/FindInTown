@@ -50,10 +50,10 @@ exports.getAllUsers = async (req, res) => {
   }
 }; 
 
-// API: GET /user/profile/:id to get user profile
+// API: GET /user/profile/:userId to get user profile
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.userId);
     if (!user) return res.status(404).json({ error: 'Utente non trovato' }); 
 
     // Remove password from the response

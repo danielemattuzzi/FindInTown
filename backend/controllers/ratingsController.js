@@ -1,4 +1,5 @@
 const Rating = require('../models/Rating');
+const Event = require('../models/Event');
 
 // API: GET /explore/rating:eventId to get all ratings for an event
 exports.getEventRating = async (req, res) => {
@@ -25,17 +26,29 @@ exports.getEventRating = async (req, res) => {
 // API: POST /explore/rating to create a new rating
 exports.createNewRating = async (req, res) => {
   try {
-    const { event_id, user_id, stars, comment } = req.body;
+    const { event_id, stars, comment } = req.body;
 
     // check if all required fields are present
-    if (!event_id || !user_id || !stars) {
-      return res.status(400).json({ error: 'event_id, user_id e stars sono obbligatori' });
+    if (!event_id || !stars || !comment) {
+      return res.status(422).json({ error: 'event_id, stars e comment sono obbligatori' });
+    }
+
+    // check if the event exists
+    const event = await Event.findById(event_id);
+    if (!event) {
+      return res.status(404).json({ error: 'Evento non trovato' });
+    }
+
+    // check if the user has already rated the event
+    const existingRating = await Rating.findOne({ event_id, user_id: req.user.id });
+    if (existingRating) {
+      return res.status(409).json({ error: 'Hai già valutato questo evento' });
     }
 
     // create a new rating
     const newRating = new Rating({
       event_id,
-      user_id: req.user.id, // Use the logged-in user's ID
+      user_id: req.user.id,
       stars,
       comment
     });
