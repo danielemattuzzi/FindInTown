@@ -64,13 +64,20 @@ exports.createNewRating = async (req, res) => {
 
 // API: DELETE /explore/rating/:ratingId to delete a rating only if the user is the owner of the rating
 exports.deleteRating = async (req, res) => {
-  const rating = await Rating.findById(req.params.ratingId);
-  if (!rating) return res.status(404).json({ error: 'Valutazione non trovata' });
+  try {
+    const rating = await Rating.findById(req.params.ratingId);
+    if (!rating) {
+      return res.status(404).json({ error: 'Valutazione non trovata' });
+    }
 
-  if (rating.user_id.toString() !== req.user.id) { // Check if the logged-in user is the owner of the rating
-    return res.status(403).json({ error: 'Non autorizzato' });
+    if (rating.user_id.toString() !== req.user.id) {
+      return res.status(403).json({ error: 'Non autorizzato' });
+    }
+
+    await rating.deleteOne();
+    res.json({ message: 'Valutazione eliminata' });
+  } catch (error) {
+    console.error('Errore durante l\'eliminazione della valutazione:', error);
+    res.status(500).json({ error: 'Errore del server' });
   }
-
-  await rating.deleteOne();
-  res.json({ message: 'Valutazione eliminata' });
 };

@@ -104,7 +104,7 @@ GET {{hostname}}/user/profile/{{user_id_invalid}} HTTP/1.1
 
 
 ### Insert a new event 
-@title = Partita Trento Calcio 2027
+@title = Partita Trento Calcio 2025
 @category = sport 
 @date = 2027-02-20T18:00:00.000Z
 POST {{hostname}}/map/events HTTP/1.1
