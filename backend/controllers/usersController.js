@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
 // API: GET /user/me to get current user profile
 exports.getCurrentUser = async (req, res) => {
@@ -15,16 +16,26 @@ exports.getCurrentUser = async (req, res) => {
 exports.updateCurrentUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+
+    // Costruisco l'oggetto con i campi da aggiornare
+    const updateFields = {};
+    if (name !== "") updateFields.name = name;
+    if (email !== "") updateFields.email = email;
+    if (password !== "") updateFields.password = bcrypt.hashSync(password, 10);
+    
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
-      { name, email, password },
+      { $set: updateFields },
       { new: true }
     );
 
-    if (!updatedUser) return res.status(404).json({ error: 'Utente non trovato' });
+    if (!updatedUser) {
+      return res.status(404).json({ error: "Utente non trovato" });
+    }
+
     res.json(updatedUser);
   } catch (err) {
-    res.status(500).json({ error: 'Errore del server' });
+    res.status(500).json({ error: "Errore del server" });
   }
 };
 

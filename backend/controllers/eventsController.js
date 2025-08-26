@@ -121,7 +121,7 @@ exports.getEventDetails = async (req, res) => {
 
     res.status(200).json(event);
   } catch (err) {
-    console.error(err);
+    //console.error(err);
 
     // Check if the error is a CastError (invalid ObjectId), 
     // which indicates that the provided ID is not valid

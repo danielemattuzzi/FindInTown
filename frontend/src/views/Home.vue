@@ -1,11 +1,11 @@
-
 <template>
      <div id="logo_div" @click="showPages=!showPages;showFilters=false">
-          <img id="logo_img" src="../../logo.png">
+          <img id="logo_img" src="../assets/logo.png">
      </div>
      <div v-if="showPages" id="pages_popup" class="absolute top-20 left-5 z-[1000] bg-white text-black p-4 rounded-lg shadow-lg w-40 flex flex-col justify-start">
-          <router-link to="/login" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left mb-2">Login</router-link>
-          <router-link to="/setting" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left">Settings</router-link>
+          <router-link v-if="!logged" to="/login" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left mb-2">Login</router-link>
+          <router-link v-if="logged" to="/profile" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left mb-2">Profile</router-link>
+          <router-link to="/settings" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left">Settings</router-link>
      </div>
      <div id="searchbar">
           <form class="w-full mx-auto" @submit.prevent="getEvents">
@@ -131,7 +131,7 @@
                          <div class="mt-2 text-left flex items-center space-x-2">
                               <template v-for="star in 5" :key="star">
                                    <button type="button" @click="selectedRating = star" @mouseover="hoverRating = star" @mouseleave="hoverRating = 0" class="focus:outline-none hover:border-black">
-                                        <svg :class="[ (hoverRating >= star || selectedRating >= star) ? 'text-yellow-400' : 'text-gray-400', 'w-8 h-8 transition-colors' ]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <svg :class="[ (hoverRating >= star || selectedRating >= star) ? 'text-yellow-400' : 'text-gray-400', 'w-8 h-8 transition-colors' ]" fill="currentColor" viewBox="0 20 20" xmlns="http://www.w3.org/2000/svg">
                                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.97a1 1 0 00.95.69h4.184c.969 0 1.371 1.24.588 1.81l-3.39 2.46a1 1 0 00-.364 1.118l1.286 3.97c.3.921-.755 1.688-1.538 1.118l-3.39-2.46a1 1 0 00-1.175 0l-3.39 2.46c-.783.57-1.838-.197-1.538-1.118l1.286-3.97a1 1 0 00-.364-1.118l-3.39-2.46c-.783-.57-.38-1.81.588-1.81h4.184a1 1 0 00.95-.69l1.286-3.97z" />
                                         </svg>
                                    </button>
@@ -208,7 +208,8 @@
                     eventRatings: [],
                     eventi_global: [],
                     scrollTimeout: null,
-                    numEvento: 0
+                    numEvento: 0,
+                    logged: localStorage.getItem("token")
                }
           },
           mounted() {
@@ -224,6 +225,7 @@
                this.getEvents();
           },
           methods: {
+
                moreDetails() {
                     document.getElementById("detailed_event").style.visibility = "visible";
                     document.getElementById("comment_section").style.visibility = "hidden";
@@ -352,8 +354,16 @@
                     this.map.setView([evento.location.coordinates[1],evento.location.coordinates[0]+0.0014], 18);
                },
                async sendRating() {
-                    if (this.selectedRating == 0 || this.rating.comment) {
+                    const token = localStorage.getItem('token');
+                    
+                    if (!token) {
+                         alert("Devi effettuare il login per inviare una recensione");
+                         return;
+                    }
+
+                    if (this.selectedRating === 0 || !this.rating.comment) {
                          alert("devi inserire sia un commento testuale e selezionare un numero di stelle per inviare il tuo rating");
+                         return;
                     }
                     
                     try {
@@ -364,20 +374,30 @@
                          });
 
                          console.log('Rating inviato con successo:', response.data);
+                         alert("Commento pubblicato");
+                         // Clear form after successful submission
+                         this.rating.comment = '';
+                         this.selectedRating = 0;
+                         
+                         // Refresh ratings list
+                         await this.getRatings();
                     } catch (error) {
-                         console.error('Errore durante l\'invio del rating:', error);
+                         if (error.response && error.response.status === 409) {
+                              alert("Hai già inserito una recensione per questo evento");
+                         } else {
+                              console.error('Errore durante l\'invio del rating:', error);
+                              alert("Errore durante l'invio della recensione");
+                         }
                     }
                },
                async getRatings() {
                     try {
-                         const response = await apiClient.get('/explore/rating', {
-                              params: {
-                                   event_id_valid: this.rating.event_id
-                              }
-                         });
-
+                         console.log('Fetching ratings for event:', this.rating.event_id);
+                         const response = await apiClient.get(`/explore/rating/${this.rating.event_id}`);
                          this.eventRatings = response.data;
                     } catch (error) {
+                         console.error('Error fetching ratings:', error);
+                         console.log('Current event_id:', this.rating.event_id);
                          alert("ratings non ricevuti");
                     }
                }

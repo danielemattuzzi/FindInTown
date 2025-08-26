@@ -44,7 +44,7 @@ export default {
         const data = response.data;
         if (data.token) {
           localStorage.setItem('token', data.token)
-          this.$router.push('/')
+          this.$router.push('/home')
           alert('Login effettuato con successo!')
         }
       } catch (error) {
