@@ -1,53 +1,68 @@
 <template>
-     <div id="logo_div" @click="showPages=!showPages;showFilters=false">
-          <img id="logo_img" src="../assets/logo.png">
-     </div>
-     <div v-if="showPages" id="pages_popup" class="absolute top-20 left-5 z-[1000] bg-white text-black p-4 rounded-lg shadow-lg w-40 flex flex-col justify-start">
-          <router-link v-if="!logged" to="/login" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left mb-2">Login</router-link>
-          <router-link v-if="logged" to="/profile" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left mb-2">Profile</router-link>
-          <router-link to="/settings" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded text-left">Settings</router-link>
-     </div>
-     <div id="searchbar">
-          <form class="w-full mx-auto" @submit.prevent="getEvents">
-               <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-               <div class="relative">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                         </svg>
+
+     <div class="absolute top-4 -left-4 z-[1000] w-1/2 grid grid-cols-9 justify-items-center">             
+          <div class="col-span-1 w-16 bg-white rounded-full justify-self-end">
+               <img src="../assets/compass-icon.png">
+          </div>
+
+          <div class="col-span-1 w-16" @click="showPages=!showPages;showFilters=false">
+               <img class="" src="../assets/profile.png">
+          </div>
+
+          <div v-if="showPages" id="pages_popup" class="absolute top-[70px] left-20 z-[1000] bg-white text-black p-4 rounded-lg shadow-lg w-40 flex flex-col justify-start border border-gray-300">
+               <router-link v-if="!logged" to="/login" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded mb-2">Login</router-link>
+               <router-link v-if="logged" to="/profile" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded mb-2">Profile</router-link>
+               <router-link to="/settings" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded">Settings</router-link>
+          </div>
+
+          <div class="grid col-span-6 w-full">
+               <form class="w-full mx-auto self-center" @submit.prevent="getEvents">
+                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+                    <div class="relative">
+                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                              <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                              </svg>
+                         </div>
+                         <input v-model="form.event_name" type="search" id="default-search" class="block w-full p-4 ps-10 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500" placeholder="Cerca Eventi..." required />
+                         <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                     </div>
-                    <input v-model="form.event_name" type="search" id="default-search" class="block w-full p-4 ps-10 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Cerca Eventi..." required />
-                    <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Search</button>
-               </div>
-          </form>
+               </form>
+          </div>
+
+          <div class="col-span-1 flex items-center justify-center h-full w-full">
+               <button @click="showFilters=!showFilters;showPages=false" type="button" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center">
+                    <svg class="w-9 h-9" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 019 17v-3.586L3.293 6.707A1 1 0 013 6V4z"/>
+                    </svg>
+                    <span class="sr-only">Filtri</span>
+               </button>
+          </div>
+
+          <div v-if="showFilters" id="filters_popup" class="absolute top-2 left-full z-[1000] bg-white text-black p-4 rounded-lg shadow-lg w-64">
+               <h2 class="text-lg font-semibold mb-2">Filtri</h2>
+               <form @submit.prevent="applyFilters">
+                    <label class="block mb-2">
+                         Categoria:
+                         <select v-model="form.category" class="w-full mt-1 p-1 border bg-white border-gray-300 rounded">
+                              <option value="">Tutte</option>
+                              <option value="sport">Sport</option>
+                              <option value="musica">Musica</option>
+                              <option value="fiera">Fiera</option>
+                         </select>
+                    </label>
+                    <label class="block mb-2">
+                         Data:
+                         <input v-model="form.date" class="w-full mt-1 p-1 border border-gray-300 rounded bg-white" type="date" name="date">
+                    </label>
+                    <button type="submit" class="mt-3 bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded">Conferma</button>
+               </form>
+          </div>
      </div>
-     <div id="filter_div" class="flex items-center justify-center h-full w-full">
-          <button @click="showFilters=!showFilters;showPages=false" type="button" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-               <svg class="w-9 h-9" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 019 17v-3.586L3.293 6.707A1 1 0 013 6V4z"/>
-               </svg>
-               <span class="sr-only">Filtri</span>
-          </button>
-     </div>
-     <div v-if="showFilters" id="filters_popup" class="absolute top-20 left-80 z-[1000] bg-white text-black p-4 rounded-lg shadow-lg w-64">
-          <h2 class="text-lg font-semibold mb-2">Filtri</h2>
-          <form @submit.prevent="applyFilters">
-               <label class="block mb-2">
-                    Categoria:
-                    <select v-model="form.category" class="w-full mt-1 p-1 border border-gray-300 rounded">
-                         <option value="">Tutte</option>
-                         <option value="sport">Sport</option>
-                         <option value="musica">Musica</option>
-                         <option value="fiera">Fiera</option>
-                    </select>
-               </label>
-               <label class="block mb-2">
-                    Data:
-                    <input v-model="form.date" class="w-full mt-1 p-1 border border-gray-300 rounded" type="date" name="date">
-               </label>
-               <button type="submit" class="mt-3 bg-green-600 hover:bg-green-700 text-white py-1 px-3 rounded">Conferma</button>
-          </form>
-     </div>
+
+
+
+
      <div id="map"></div>
      <div id="explore" @wheel="onWheel">
           <button class="absolute top-4 right-4 p-2 bg-white/90 rounded-full hover:bg-white transition-colors z-10" @click="closeExplore">
@@ -79,7 +94,7 @@
                               </tr>
                          </tbody>
                     </table>
-                    <button id="more_details_button" @click="moreDetails" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Maggiori Dettagli</button>
+                    <button id="more_details_button" @click="moreDetails" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Maggiori Dettagli</button>
                </div>
           </div>
           <div id="detailed_event" @wheel="">
@@ -122,7 +137,7 @@
                          </tbody>
                     </table>
 
-                    <button id="show_comments_button" @click="showComments" class="mt-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Mostra Commenti</button>
+                    <button id="show_comments_button" @click="showComments" class="mt-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2">Mostra Commenti</button>
 
                     <form @submit.prevent="sendRating" class="mt-4">
                          <h3 class="text-lg font-semibold mb-2 text-gray-200">Cosa ne pensi?</h3>
@@ -409,35 +424,6 @@
 
 <style scoped>
 /* HEADER + MAPPA */
-#logo_div {
-     height: 7vh; width: 7vh;
-     position: absolute; top: 2vh; left: 2vh;
-     z-index: 1001;
-     background-color: rgba(255, 255, 255, 1);
-     border-radius: 0.5vh;
-}
-#logo_img {
-
-}
-#searchbar {
-     height: 7vh; width: 27vw;
-     position: absolute; top: 2vh; left: 2vh;
-     z-index: 1000;
-     background-color: rgba(255, 255, 255, 0);
-     text-align: left;
-     display: flex;
-     align-items: center;
-     padding-left: 8vh;
-     padding-right: 1vh;
-     border-radius: 3.5vh;
-}
-#filter_div {
-     height: 7vh; width: 7vh;
-     position: absolute; top: 2vh; left: 29vw;
-     z-index: 1000;
-     background-color: rgba(0, 0, 0, 0);
-     border-radius: 3.5vh;
-}
 #map {
      height: 100vh; width: 100vw;
      position: absolute; top: 0; left: 0;

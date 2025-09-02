@@ -1,20 +1,23 @@
+
+
 <template>
-  <div class="page-container min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="flex items-center justify-center">
     <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-sm hover:shadow-2xl transition duration-150 border border-gray-200">
-      <h2 class="text-2xl font-bold mb-6 text-center">Accedi</h2>
+      <h2 class="text-2xl font-bold mb-6 text-center text-slate-800">Accedi</h2>
+      <img class="w-40 mx-auto mb-4" src="../assets/logo.png" alt="">
       <form @submit.prevent="handleLogin" class="space-y-4">
         <input v-model="form.email" type="email" placeholder="Email"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+          class="bg-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
         <input v-model="form.password" type="password" placeholder="Password"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+          class="bg-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
         <button type="submit"
           class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition">Accedi</button>
       </form>
       <button @click="loginWithGoogle" class="px-4 py-2 mt-4 justify-center border flex gap-2 border-slate-200  ounded-lg hover:shadow transition duration-150 hover:bg-slate-100 w-full"> 
         <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo">
-        Accedi con Google
+        <p class="text-slate-800"> Accedi con Google </p>
       </button>
-      <p class="mt-4 text-sm text-center">Non hai un account?
+      <p class="text-slate-800 mt-4 text-sm text-center">Non hai un account?
         <router-link to="/register" class="text-green-600 hover:underline">Registrati</router-link>
       </p>
     </div>
@@ -79,13 +82,7 @@ export default {
 
 <style>
 body {
-  background-color: rgb(243 244 246); /* This is Tailwind's bg-gray-100 color */
+  background-color: #12B07C; /* This is Tailwind's bg-gray-100 color */
   margin: 0;
-  min-height: 100vh;
-}
-
-.page-container {
-  min-height: 100vh;
-  width: 100%;
 }
 </style>
