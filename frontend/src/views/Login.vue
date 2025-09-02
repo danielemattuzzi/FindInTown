@@ -20,6 +20,9 @@
       <p class="text-slate-800 mt-4 text-sm text-center">Non hai un account?
         <router-link to="/register" class="text-green-600 hover:underline">Registrati</router-link>
       </p>
+        <p class="text-slate-800 mt-2 text-sm text-center">
+          <router-link to="/home" class="text-blue-600 hover:underline">Prosegui senza account</router-link>
+        </p>
     </div>
   </div>
 </template>
