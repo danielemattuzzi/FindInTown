@@ -7,9 +7,9 @@
       <img class="w-40 mx-auto mb-4" src="../assets/logo.png" alt="">
       <form @submit.prevent="handleLogin" class="space-y-4">
         <input v-model="form.email" type="email" placeholder="Email"
-          class="bg-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+          class="bg-white text-slate-800 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
         <input v-model="form.password" type="password" placeholder="Password"
-          class="bg-white w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
+          class="bg-white text-slate-800 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" />
         <button type="submit"
           class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition">Accedi</button>
       </form>
@@ -48,7 +48,7 @@ export default {
         if (data.token) {
           localStorage.setItem('token', data.token)
           this.$router.push('/home')
-          alert('Login effettuato con successo!')
+          alert('Login effettuato con successo')
         }
       } catch (error) {
         // More detailed error logging

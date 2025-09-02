@@ -24,7 +24,6 @@
                         <p class="w-full text-left font-semibold">Email</p>
                         <div class="flex">
                             <input disabled type="text" :value="user.email" class="bg-white border border-slate-200 rounded-lg w-64 p-1">
-                            <button @click="changeEmail" class="inline ml-5 cursor-pointer underline">Salva</button>
                         </div>
                     </div>
 
@@ -32,8 +31,8 @@
                     <div class="row-span-1 text-black">
                         <p class="w-full text-left font-semibold">Nuova Password</p>
                         <div class="flex">
-                            <input type="text" v-model="user.password" class="bg-white border border-slate-200 rounded-lg w-64 p-1">
-                            <button @click="ChangePassword" class="inline ml-5 cursor-pointer underline">Salva</button>
+                            <input :disabled="google" type="text" v-model="user.password" class="bg-white border border-slate-200 rounded-lg w-64 p-1">
+                            <button :disabled="google" @click="ChangePassword" class="inline ml-5 cursor-pointer underline">Salva</button>
                         </div>
                     </div>
 
@@ -99,8 +98,9 @@
     import { ref } from 'vue'
     import apiClient from '../api';
     import { useRouter } from 'vue-router';
-    const router = useRouter()
+    const router = useRouter();
 
+let google;
 let user = ref({
             name: "",
             email: "",
@@ -118,6 +118,7 @@ onMounted( async () => {
                   email: data.data.email,
                   password: "",
             };
+    google = data.data.googleId != null ? true : false;
     console.log(user);
 });
 const categories = ref([
@@ -163,7 +164,7 @@ function logout() {
     router.push("/login");
 }
 async function deleteAccount() {
-    if (confirm("Sicuro di voler procedere con l'elimionazione dell'account?")) {
+    if (confirm("Sicuro di voler procedere con l'eliminazione dell'account dal database FindInTown?")) {
         try {
             const response = await apiClient.delete('/user/me', user.value);
         } catch (e) {

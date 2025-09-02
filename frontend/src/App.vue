@@ -12,7 +12,7 @@ onMounted(() => {
 
   if (token) { // saving the token in localStorage
     localStorage.setItem('token', token);
-    router.push('/'); 
+    router.push('/home'); 
     alert('Login effettuato con successo!'); 
   }
 });
