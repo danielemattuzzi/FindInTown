@@ -19,7 +19,7 @@ exports.googleCallback = [
     });
 
     // Use environment variable for frontend URL or fallback to deployed URL
-    const frontendUrl = process.env.FRONTEND_URL || 'https://danielemattuzzi.github.io/FindTest';
+    const frontendUrl = process.env.FRONTEND_URL || 'https://danielemattuzzi.github.io/FindInTown';
     
     // You can return the token in the response
     // res.json({ token }); 
