@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000', // URL of the backend server
+  baseURL: 'https://findintown.onrender.com', // URL of the deployed backend server
   headers: {
     'Content-Type': 'application/json',
   },

@@ -77,7 +77,8 @@ export default {
       }
     },
     loginWithGoogle() {
-      window.location.href = 'http://localhost:3000/auth/google'; // Redirect to the backend for Google login
+      // Use the same base URL as your API client
+      window.location.href = `${apiClient.defaults.baseURL}/auth/google`; // Redirect to the deployed backend for Google login
     }
   }
 }

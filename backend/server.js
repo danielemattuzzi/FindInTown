@@ -14,7 +14,6 @@ const cors = require('cors'); // Import CORS middleware
 // Add CORS middleware to allow requests from specific origins
 app.use(cors({
   origin: [
-    'http://localhost:5173', // Local development frontend
     'https://danielemattuzzi.github.io' // GitHub Pages frontend
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
