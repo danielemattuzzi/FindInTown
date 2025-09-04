@@ -322,6 +322,7 @@
                               .on('click', (e) => {
                                    document.getElementById("comment_section").style.visibility = "hidden";
                                    document.getElementById("detailed_event").style.visibility = "hidden";
+                                   document.getElementById("d_image_container").style.visibility = "hidden";
                                    document.getElementById("explore").style.visibility = "visible";
                                    this.setEvent(evento);
                               });
