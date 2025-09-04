@@ -8,7 +8,7 @@ import Settings from '../views/Settings.vue'
 const routes = [
   { 
     path: '/', 
-    redirect: '/login' 
+    redirect: '/home' 
   },
   { 
     path: '/home', 
