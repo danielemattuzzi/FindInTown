@@ -10,9 +10,9 @@
           </div>
 
           <div v-if="showPages" id="pages_popup" class="absolute top-[70px] left-20 z-[1000] bg-white text-black p-4 rounded-lg shadow-lg w-40 flex flex-col justify-start border border-gray-300">
-               <router-link v-if="!logged" to="/login" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded mb-2">Login</router-link>
-               <router-link v-if="logged" to="/profile" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded mb-2">Profile</router-link>
-               <router-link to="/settings" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded">Settings</router-link>
+               <router-link v-if="!logged" to="/login" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded mb-2">Accedi</router-link>
+               <router-link v-if="logged" to="/profile" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded mb-2">Profilo</router-link>
+               <router-link to="/settings" class="bg-white border-2 border-white hover:border-green-300 text-black hover:text-black py-1 px-3 rounded">Impostazioni</router-link>
           </div>
 
           <div class="grid col-span-6 w-full">
@@ -25,7 +25,7 @@
                               </svg>
                          </div>
                          <input v-model="form.event_name" type="search" id="default-search" class="block w-full p-4 ps-10 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500" placeholder="Cerca Eventi..." required />
-                         <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                         <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2">Cerca</button>
                     </div>
                </form>
           </div>
@@ -181,11 +181,6 @@
           </div>
      </div>
 </template>
-
-<!--
-     TODO: aggiungere il logo
-     TODO: (?) animazioni scorrimento
--->
 
 <script>
      import 'leaflet/dist/leaflet.css'

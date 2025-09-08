@@ -76,22 +76,20 @@
                     <div class="row-span-1 p-5 border-b border-[#B3B3B3]">
                         <p class="w-full text-left text-black font-semibold">Cos'è FindInTown?</p>
                         <p class="w-full text-left text-black text-sm">FindInTown è un servizio che ti permette di trovare informazioni riguardo a tutti gli eventi presenti a Trento con pochi semplici click, 
-                                                                    dalla comodità del tuo smartphone</p>
+                                                                    dalla comodità del tuo smartphone o computer.</p>
                     </div>
                     <div class="row-span-1 p-5 border-b border-[#B3B3B3]">
                         <p class="w-full text-left text-black font-semibold">Come usare FindInTown?</p>
-                        <p class="w-full text-left text-black text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil voluptate magnam eveniet voluptas fuga! Similique consequuntur quibusdam mollitia temporibus doloribus, 
-                                                                    ipsa optio inventore saepe odit.</p>
+                        <p class="w-full text-left text-black text-sm">Usare FindInTown è semplicissimo, basta collegarsi al sito e iniziare a cercare gli eventi che ti interessano, per categoria, data o semplicemente dalla mappa.</p>
                     </div>
                     <div class="row-span-1 p-5 border-b border-[#B3B3B3]">
                         <p class="w-full text-left text-black font-semibold">Come FindInTown utilizza i miei dati?</p>
-                        <p class="w-full text-left text-black text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil voluptate magnam eveniet voluptas fuga! Similique consequuntur quibusdam mollitia temporibus doloribus, 
-                                                                    ipsa optio inventore saepe odit.</p>
+                        <p class="w-full text-left text-black text-sm">FindInTown gestisce i dati degli utenti secondo il rispetto delle normative GDPR. Inoltre tali dati servono solamente per la tracciabilità dei profili,
+                                                                    e non per operazioni di profilazione o vendita dei dati.</p>
                     </div>
                     <div class="row-span-1 p-5 border-b border-[#B3B3B3]">
                         <p class="w-full text-left text-black font-semibold">FindInTown è gratuito?</p>
-                        <p class="w-full text-left text-black text-sm">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil voluptate magnam eveniet voluptas fuga! Similique consequuntur quibusdam mollitia temporibus doloribus, 
-                                                                    ipsa optio inventore saepe odit.</p>
+                        <p class="w-full text-left text-black text-sm">FindInTown è totalmente gratuito per tutti gli utenti, siano essi organizzatori o consumatori. Non sono presenti funzionalità extra bloccate dietro pagamento.</p>
                     </div>
                 </div>                
             </div>
