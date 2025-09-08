@@ -69,7 +69,7 @@
                 </div>  
                 
                 <!-- Supporto -->
-                <div id="supporto" class="row-span-1 rounded-lg grid grid-rows-4 bg-white">
+                <div id="supporto" class="row-span-1 rounded-lg grid grid-rows-5 bg-white">
                     <div class="p-5">
                         <p class="text-black font-bold text-2xl w-full text-left">Supporto</p>
                     </div>
