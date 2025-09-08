@@ -91,6 +91,10 @@
                         <p class="w-full text-left text-black font-semibold">FindInTown è gratuito?</p>
                         <p class="w-full text-left text-black text-sm">FindInTown è totalmente gratuito per tutti gli utenti, siano essi organizzatori o consumatori. Non sono presenti funzionalità extra bloccate dietro pagamento.</p>
                     </div>
+                    <div class="row-span-1 p-5 border-b border-[#B3B3B3]">
+                        <p class="w-full text-left text-black font-semibold">Hai ancora bisogno?</p>
+                        <p class="w-full text-left text-black text-sm">Per contattarci puoi scriverci all'indirizzo mail <b>supporto@findintown.it</b></p>
+                    </div>
                 </div>                
             </div>
         </div>
